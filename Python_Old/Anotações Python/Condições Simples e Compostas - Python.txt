@@ -1,0 +1,5 @@
+Condição (Nunca serão executados ambos, apenas TRUE ou FALSE)
+if carro.esquerda():
+   Bloco TRUE
+else:
+   Bloco FALSE

@@ -1,0 +1,6 @@
+nome = str(input('Digite seu nome: ')).strip()
+print('Analisando seu nome ...')
+print(f'Seu nome em maísculo é {nome.upper()}')
+print(f'Seu nome em minusculo é {nome.lower()}')
+print('Seu nome tem ao todo {} letras.' .format(len(nome) - nome.count(' ')))
+print('Seu primeiro nome tem {} letras' .format(nome.find(' ')))

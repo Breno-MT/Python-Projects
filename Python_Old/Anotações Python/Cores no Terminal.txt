@@ -1,0 +1,2 @@
+ASNI - escape sequence
+\033[STYLE;TEXT;BACKm

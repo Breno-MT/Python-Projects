@@ -1,0 +1,11 @@
+#podemos ter mais de um construtor para um classe
+string = str(6)
+print(string)
+inteiro = int('6')
+print(inteiro)
+float_1 = float('6')
+print(float_1)
+float_2 = float(inteiro)
+print(float_2)
+lista = list('a b c')
+print(lista)

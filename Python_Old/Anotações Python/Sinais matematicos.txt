@@ -1,0 +1,7 @@
++ Adição
+- Subtração
+* Multiplicação
+** Exponenciação
+/ Divisão (float)
+// Divisão inteira
+!= Diferente

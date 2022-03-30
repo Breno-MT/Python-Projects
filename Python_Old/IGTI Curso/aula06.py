@@ -1,0 +1,15 @@
+nome_do_arquivo = input('Insira o nome do arquivo a ser lido: ')
+rquivo = open(nome_do_arquivo, "r")
+for linhas in arquivo:
+    print(linhas)
+arquivo.close()
+
+nome_do_arquivo = input('Escreva o nome do seu arquivo: ')
+seu_nome = input('Digite seu nome: ')
+sua_idade = int(input('Digite sua idade: '))
+sua_cidade = input('Digite sua cidade: ')
+arquivo_saida = open(nome_do_arquivo, 'w')
+arquivo_saida.write('Olá, '+seu_nome+'. \n')
+arquivo_saida.write(seu_nome + ' possui ' + str(sua_idade) + ' anos.\n')
+arquivo_saida.write('Você mora em ' +sua_cidade+'!')
+arquivo_saida.close()
