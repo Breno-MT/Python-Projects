@@ -1,20 +1,24 @@
 import random
 
-count = 0
+count = 1
 
-while count < 3:
+while count < 4:
     
-    lista_numbers = str(random.randrange(0,51,1))
-    player_choices = str(input("Digite um número e tente adivinhar!: "))
+    lista_numbers = random.randint(0,51)
+    player_choices = int(input("Digite um número e tente adivinhar!: "))
 
 
-    if player_choices in lista_numbers:
+    if player_choices == lista_numbers:
+        print("-*-"*6)
         print("Parabéns! Você ganhou!")
+        print(f"Tentativas restantes: {count}")
         count += 1
         continue
 
-    elif player_choices not in lista_numbers:
+    elif player_choices != lista_numbers:
+        print("-*-"*6)
         print("Você errou! Tente novamente")
+        print(f"Tentativas restantes: {count}")
         count += 1
         continue
 
