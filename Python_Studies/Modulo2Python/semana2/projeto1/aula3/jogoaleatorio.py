@@ -12,6 +12,7 @@ while count < 4:
         print("-*-"*6)
         print("Parabéns! Você ganhou!")
         print(f"Tentativas restantes: {count}")
+        print("-*-"*6)
         count += 1
         continue
 
@@ -19,6 +20,7 @@ while count < 4:
         print("-*-"*6)
         print("Você errou! Tente novamente")
         print(f"Tentativas restantes: {count}")
+        print("-*-"*6)
         count += 1
         continue
 
