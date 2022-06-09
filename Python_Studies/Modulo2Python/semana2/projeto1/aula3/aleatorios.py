@@ -1,6 +1,6 @@
 import random
 
-random.seed(2) # inicia a semente para manter um padrão, dependendo da forma pode não haver mudanças
+#random.seed(2) # inicia a semente para manter um padrão, dependendo da forma pode não haver mudanças
 
 
 print(random.randint(0,20))
