@@ -3,7 +3,7 @@ import random
 count = 1
 
 while count < 4:
-    
+
     lista_numbers = random.randint(0,51)
     player_choices = int(input("Digite um número e tente adivinhar!: "))
 
