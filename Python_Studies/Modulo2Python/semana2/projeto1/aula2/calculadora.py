@@ -39,5 +39,3 @@ class Matematica:
     def multiplicacao(self):
         return self.a * self.b
 
-conta1 = Matematica(5,25)
-print(conta1.soma())
