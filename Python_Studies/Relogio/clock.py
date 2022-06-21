@@ -11,7 +11,7 @@ def atualizacao():
     data_str = strftime("%d %B, %Y") # %d Dia(01 até 31), %B Nome do Mes, %Y Ano Ex: 2001
     data_label.config(text=data_str)
 
-    window.after(1000, atualizacao) # Irá atualizar a cada 1 sec, ou a cada 1000 milisecungos
+    window.after(1000, atualizacao) # Irá atualizar a cada 1 sec, ou a cada 1000 milisegundos
 
 
 window = Tk()
