@@ -34,10 +34,10 @@ class Passagens:
             assento_comprada = int(input("De 1 a 46, qual o número que você quer da seu assento?: "))
             
             if assento_comprada > 46:
-                print("Digite apenas até 46!")
+                print("Digite apenas até o número 46!")
             
             elif assento_comprada < 1:
-                print('Digite acima de 1!')
+                print('Digite acima do número 1!')
 
             print(f"Você comprou o assento na posição {assento_comprada}, obrigado {self.nome} !")
             self.__lugar_passagem.remove(assento_comprada)
@@ -47,10 +47,10 @@ class Passagens:
             assento_comprada = int(input("De 1 a 46, qual o número que você quer da seu assento?: "))
             
             if assento_comprada > 46:
-                print("Digite apenas até 46!")
+                print("Digite apenas até o número 46!")
             
             elif assento_comprada < 1:
-                print('Digite acima de 1!')
+                print('Digite acima do número 1!')
 
             print(f"Você comprou o assento na posição {assento_comprada}, obrigado {self.nome} !")
             self.__lugar_passagem.remove(assento_comprada)
@@ -70,16 +70,13 @@ class Passagens:
 
         self.__lugar_passagem.append(assento_comprada)
         self.__lugar_passagem.remove(assento_alterado)
-        print(f"Assentos disponíveis atualmente {self.__lugar_passagem}")
+        print(f"Assentos disponíveis atualmente são {self.__lugar_passagem}")
     
     @property
     def cancelarPassagem(self):
-        print(f"Você cancelou sua compra do assento {assento_comprada}! E o valor de {self.__preco_passagem} foi retornado.")
+        print(f"Você cancelou sua compra do assento {assento_comprada}! E o valor de R${self.__preco_passagem} foi retornado.")
         self.__lugar_passagem.append(assento_comprada)
-        print(self.__lugar_passagem)
-
-    def sair(self):
-        return False
+        print(f"Lista de passagem disponiveis: {self.__lugar_passagem}")
 
 comprador = Passagens('Breno')
 
