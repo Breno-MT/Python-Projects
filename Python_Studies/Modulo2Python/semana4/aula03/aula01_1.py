@@ -3,6 +3,8 @@ class Pessoa():
         self.nome = nome
         self.idade = idade
     
+
+    # Método especial para retornar nome, idade
     def __str__(self):
         return str(self.__dict__)
 
