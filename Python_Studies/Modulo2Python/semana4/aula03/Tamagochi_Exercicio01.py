@@ -12,10 +12,17 @@ class Tamagochi:
     @property
     def matar(self):
         self.__contador +=1
+        self.__fome += 0.5
+        self.__saude += 0.5
+        self.idade += 2
 
         if self.__contador > 3:
             print("O seu Tamagochi morreu. Fim de Jogo :(")
             sys.exit()
+    
+    @property
+    def reset_count(self):
+        self.__contador = 0
 
 
     def change_name(self):
@@ -85,31 +92,37 @@ while True:
     |
     |   Digite sua opção: """))
 
-    if opcao == 1:
-        opcao = tamagochi.change_name()
-        tamagochi.matar
-    
-    elif opcao == 2:
-        opcao = tamagochi.give_food
-    
-    elif opcao == 3:
-        opcao = tamagochi.give_med
+    try:
+        if opcao == 1:
+            opcao = tamagochi.change_name()
+            tamagochi.matar
+        
+        elif opcao == 2:
+            opcao = tamagochi.give_food
+            tamagochi.reset_count
+        
+        elif opcao == 3:
+            opcao = tamagochi.give_med
+            tamagochi.reset_count
 
-    elif opcao == 4:
-        tamagochi.status
-        print("Não deixe a Fome ou Saúde chegar a 5! Ele irá morrer :(")
-        tamagochi.matar
+        elif opcao == 4:
+            tamagochi.status
+            print("Não deixe a Fome ou Saúde chegar a 5! Ele irá morrer :(")
+            tamagochi.matar
 
-    elif opcao == 5:
-        print("Você brincou com seu Tamagochi e ele ficou feliz! :D")
-        tamagochi.matar
+        elif opcao == 5:
+            print("Você brincou com seu Tamagochi e ele ficou feliz! :D")
+            tamagochi.matar
 
-    
-    elif opcao == 6:
-        os.system("cls")
+        
+        elif opcao == 6:
+            os.system("cls")
 
-    elif opcao == 0:
-        break
+        elif opcao == 0:
+            break
 
-    else:
-        print("Digite apenas as opções acima.")
+        else:
+            print("Digite apenas as opções acima.")
+
+    except ValueError as e:
+        print(f"Digite apenas número. {e}")
