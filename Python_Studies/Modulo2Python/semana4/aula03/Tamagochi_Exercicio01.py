@@ -4,8 +4,8 @@ class Tamagochi:
     def __init__(self, nome = 'Lucius', idade = 9):
         self.nome = nome
         self.idade = idade
-        self.__fome = 3
-        self.__saude = 3
+        self.__fome = 2.5
+        self.__saude = 2.5
 
     def change_name(self):
         opcao = str(input(f"""Você gostaria de mudar o nome do seu Tamagochi? 
@@ -51,16 +51,18 @@ tamagochi = Tamagochi()
 
 while True:
 
-    opcao = int(input(""" Bem-vindo ao seu Tamagochi!
+    count = 0
 
+    opcao = int(input(f""" Bem-vindo ao seu Tamagochi!
+    ______________________________________________________
     |                                ****/            
     |                            .**, &/& ,//.        
     |                            *//  @   @  ///       
     |                       **/////////////////     
     |                       *////////////////////    
     |                     *//////_________/////////   
-    |                     *//////         ///////   
-    |                     ///////_______//////(    
+    |                     */////|        ////////   
+    |                     //////|_______//////(    
     |                         ##//////(((%# 
     |
     |
@@ -76,6 +78,7 @@ while True:
 
     if opcao == 1:
         opcao = tamagochi.change_name()
+        count += 1
     
     elif opcao == 2:
         opcao = tamagochi.give_food
@@ -85,6 +88,8 @@ while True:
 
     elif opcao == 4:
         print(tamagochi)
+        print("Não deixe a Fome ou Saúde chegar a 5! Ele irá morrer :(")
+        count += 1
 
     elif opcao == 5:
         os.system("cls")
