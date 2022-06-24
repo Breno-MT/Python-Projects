@@ -1,4 +1,5 @@
 import os
+import sys
 
 class Tamagochi:
     def __init__(self, nome = 'Lucius', idade = 9):
@@ -46,24 +47,15 @@ class Tamagochi:
     # Método especial para retornar nome, idade, fome e saude
     def __str__(self):
         return str(self.__dict__)
-
-    @property
-    def isDying(self):
+    
+    def isDead():
         if count > 3:
-            self.__fome += 0.5
-            self.__saude += 0.5
-        
-
+            print("Seu tamagochi morreu. Fim de Jogo :(")
+            sys.exit()
 
 tamagochi = Tamagochi()
 
-
-
-
 while True:
-
-    global count
-    count = 0
 
     opcao = int(input(f""" Bem-vindo ao seu Tamagochi!
     ______________________________________________________
@@ -87,11 +79,8 @@ while True:
     |
     |   Digite sua opção: """))
 
-
     if opcao == 1:
         opcao = tamagochi.change_name()
-        count += 1
-        tamagochi.isDying
     
     elif opcao == 2:
         opcao = tamagochi.give_food
@@ -102,8 +91,6 @@ while True:
     elif opcao == 4:
         print(tamagochi)
         print("Não deixe a Fome ou Saúde chegar a 5! Ele irá morrer :(")
-        count += 1
-        tamagochi.isDying
 
     elif opcao == 5:
         os.system("cls")
