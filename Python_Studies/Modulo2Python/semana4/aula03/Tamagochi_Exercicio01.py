@@ -24,7 +24,7 @@ class Tamagochi:
     @property
     def give_food(self):
 
-        if self.__fome < 1:
+        if self.__fome <= 1:
             print(f"""A fome do {self.nome} já está ok! Não precisa retirar.
                       Fome atual: {self.__fome}""")
         
@@ -34,9 +34,9 @@ class Tamagochi:
 
     @property
     def give_med(self):
-        if self.__saude < 1:
-            print(f"""A saúde do {self.__saude} já está ok! Não precisa retirar.
-                      Saúde atual: {self.__fome}""")
+        if self.__saude <= 1:
+            print(f"""A saúde do {self.nome} já está ok! Não precisa retirar.
+                      Saúde atual: {self.__saude}""")
         
         elif self.__saude > 1:
             print(f"Você retirou 0.5 de fome do {self.nome} !")
@@ -47,10 +47,22 @@ class Tamagochi:
     def __str__(self):
         return str(self.__dict__)
 
+    @property
+    def isDying(self):
+        if count > 3:
+            self.__fome += 0.5
+            self.__saude += 0.5
+        
+
+
 tamagochi = Tamagochi()
+
+
+
 
 while True:
 
+    global count
     count = 0
 
     opcao = int(input(f""" Bem-vindo ao seu Tamagochi!
@@ -79,6 +91,7 @@ while True:
     if opcao == 1:
         opcao = tamagochi.change_name()
         count += 1
+        tamagochi.isDying
     
     elif opcao == 2:
         opcao = tamagochi.give_food
@@ -90,6 +103,7 @@ while True:
         print(tamagochi)
         print("Não deixe a Fome ou Saúde chegar a 5! Ele irá morrer :(")
         count += 1
+        tamagochi.isDying
 
     elif opcao == 5:
         os.system("cls")
