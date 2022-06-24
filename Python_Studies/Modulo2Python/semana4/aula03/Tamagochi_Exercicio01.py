@@ -7,6 +7,16 @@ class Tamagochi:
         self.idade = idade
         self.__fome = 2.5
         self.__saude = 2.5
+        self.__contador = 0
+
+    @property
+    def matar(self):
+        self.__contador +=1
+
+        if self.__contador > 3:
+            print("O seu Tamagochi morreu. Fim de Jogo :(")
+            sys.exit()
+
 
     def change_name(self):
         opcao = str(input(f"""Você gostaria de mudar o nome do seu Tamagochi? 
@@ -18,15 +28,16 @@ class Tamagochi:
         if opcao == 's':
             nome_alterado = str(input("Digite o nome que deseja: "))
             self.nome = nome_alterado
+
         
         elif opcao == 'n':
             print('Você cancelou essa operação.')
-        
+
     @property
     def give_food(self):
 
         if self.__fome <= 1:
-            print(f"""A fome do {self.nome} já está ok! Não precisa retirar.
+            print(f"""A fome do {self.nome} já está ok! Não precisa alimentar.
                       Fome atual: {self.__fome}""")
         
         elif self.__fome > 1:
@@ -36,29 +47,23 @@ class Tamagochi:
     @property
     def give_med(self):
         if self.__saude <= 1:
-            print(f"""A saúde do {self.nome} já está ok! Não precisa retirar.
+            print(f"""A saúde do {self.nome} já está ok! Não precisa medicar.
                       Saúde atual: {self.__saude}""")
         
         elif self.__saude > 1:
             print(f"Você retirou 0.5 de fome do {self.nome} !")
             self.__saude -= 0.5
     
-
-    # Método especial para retornar nome, idade, fome e saude
-    def __str__(self):
-        return str(self.__dict__)
-    
-    def isDead():
-        if count > 3:
-            print("Seu tamagochi morreu. Fim de Jogo :(")
-            sys.exit()
+    @property
+    def status(self):
+        print(f"Nome: {self.nome}, Idade: {self.idade}, Fome: {self.__fome}, Saúde: {self.__saude}")
 
 tamagochi = Tamagochi()
 
 while True:
 
     opcao = int(input(f""" Bem-vindo ao seu Tamagochi!
-    ______________________________________________________
+     ______________________________________________________
     |                               ****/            
     |                           .**, &/& ,//.        
     |                         *//  @   @  ///       
@@ -74,13 +79,15 @@ while True:
     |    [2] Dar Comida
     |    [3] Dar Remédio
     |    [4] Imprimir status
-    |    [5] Limpar CMD
+    |    [5] Brincar com Tamagochi
+    |    [6] Limpar CMD
     |    [0] Sair
     |
     |   Digite sua opção: """))
 
     if opcao == 1:
         opcao = tamagochi.change_name()
+        tamagochi.matar
     
     elif opcao == 2:
         opcao = tamagochi.give_food
@@ -89,10 +96,16 @@ while True:
         opcao = tamagochi.give_med
 
     elif opcao == 4:
-        print(tamagochi)
+        tamagochi.status
         print("Não deixe a Fome ou Saúde chegar a 5! Ele irá morrer :(")
+        tamagochi.matar
 
     elif opcao == 5:
+        print("Você brincou com seu Tamagochi e ele ficou feliz! :D")
+        tamagochi.matar
+
+    
+    elif opcao == 6:
         os.system("cls")
 
     elif opcao == 0:
