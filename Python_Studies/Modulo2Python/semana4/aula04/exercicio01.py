@@ -1,12 +1,14 @@
 import random
 
+nomes = ["Breno", "Eric", "Maycon", "Yan", "Joao", "Kauan", "Farias", "Gabriel"]
+
 class Pessoa:
     def __init__(self, nome, idade):
         self.nome = nome
         self.idade = idade
 
     def mostrar(self):
-        print(f"{self.nome} tem: {self.idade} anos!")
+        print(f"Nome: {self.nome}, Idade: {self.idade} anos, Nota: {self.nota}")
 
     @classmethod
     def criarPeloAno(cls, nome, ano_nascimento):
@@ -21,6 +23,7 @@ class Aluno(Pessoa):
         self.idade = idade
         self.nota = random.randint(1,10)
         self.curso = curso
+    
     def darNota(self, nota):
         self.nota = nota
         print(f"{self.nome} recebeu nota {self.nota}")
@@ -32,19 +35,10 @@ class Aluno(Pessoa):
         elif self.nota < 7:
             print(f"{self.nome} está reprovado, estude mais! Nota: {self.nota}")
 
-lista_nomes = ['Breno', 'Maycon', 'Kauan', 'Yan']
+# nomes[random.randint(0, len(nomes) -1)]
 
-# lista_random = random.choices(lista_nomes)
-lista_random = random.shuffle(lista_nomes)
-
-lista_idade = [random.randint(20, 40)]
-
-lista_alunos = []
-
-for _ in range(1,31):
-    x = Aluno(lista_random, lista_idade)
-    lista_alunos.append(x)
-    x.isApproved()
-
-print(*lista_alunos, sep = "\n")
-
+for i in range(30):
+    aluno = Aluno(nomes[random.randint(0, len(nomes) -1)], random.randint(18, 50))
+    aluno.darNota(random.randint(1,10))
+    aluno.mostrar()
+    aluno.isApproved()
