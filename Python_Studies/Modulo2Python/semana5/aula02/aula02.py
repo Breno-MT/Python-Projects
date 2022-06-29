@@ -12,6 +12,7 @@ class Cliente:
         for endereco in self.enderecos:
             print(f"O cliente {self.nome}, reside em: {endereco.cidade}-{endereco.estado}")
 
+
 class Endereco:
     
     def __init__(self, cidade, estado):
