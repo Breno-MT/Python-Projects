@@ -23,7 +23,7 @@ class PagamentoBoleto(Pagamento):
 class PagamentoPix(Pagamento):
 
     def pagar():
-        print("Pagamento Pix...")
+        print("Pagamento Pix... R$1000")
 
 
 PagamentoBoleto.pagar()
