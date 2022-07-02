@@ -1,6 +1,7 @@
 def stringer(func):
     
     def inverter(str, num):
+        # Podendo passar o numero de vezes que desejar
         return str[::-1] * num
     
     return inverter
