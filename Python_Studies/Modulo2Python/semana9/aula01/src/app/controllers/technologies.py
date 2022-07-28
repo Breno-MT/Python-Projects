@@ -10,7 +10,11 @@ technology = Blueprint('technology', __name__, url_prefix='/technology')
 
 
 @technology.route("/", methods = ["GET"])
-def list_all_technologies(): return {"data": ["JavaScript", "Python"]}
+def list_all_technologies(): 
+
+    techs = read()
+    return jsonify(techs), 200
+
 
 @technology.route("/", methods = ["POST"])
 def add_new_technologies(): 
@@ -22,9 +26,14 @@ def add_new_technologies():
     # insere na chave data, apartir da chave data passada ( esse data['data'] vem do POST que é enviado. )
     # lista_json["data"].append(data['data'])
 
-    try:
-        if data['error']:
-            return jsonify(data)
+    if 'error' in data:
+        return jsonify(data), 400
     
-    except:
-        return data
+    techs = read()
+
+    if techs == None:
+        save([data])
+        return jsonify(data), 201
+    
+    print(data)
+    return data
