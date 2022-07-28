@@ -1,19 +1,30 @@
+import json
 from flask import Blueprint, request, jsonify
+
+from src.app.db import read, save
+from src.app.utils import exists_key
 
 technology = Blueprint('technology', __name__, url_prefix='/technology')
 
-lista_json = {"data": ["JavaScript", "Python", "C++"]}
+# lista_json = {"data": ["JavaScript", "Python", "C++"]}
 
 
 @technology.route("/", methods = ["GET"])
-def list_all_technologies(): return lista_json
+def list_all_technologies(): return {"data": ["JavaScript", "Python"]}
 
 @technology.route("/", methods = ["POST"])
 def add_new_technologies(): 
-    
-    data = request.get_json()
-    print(data)
-    
-    lista_json["data"].append(data['data'])
 
-    return lista_json
+    list_keys = ['id', 'tech']
+
+    data = exists_key(request.get_json(), list_keys)
+    
+    # insere na chave data, apartir da chave data passada ( esse data['data'] vem do POST que é enviado. )
+    # lista_json["data"].append(data['data'])
+
+    try:
+        if data['error']:
+            return jsonify(data)
+    
+    except:
+        return data
