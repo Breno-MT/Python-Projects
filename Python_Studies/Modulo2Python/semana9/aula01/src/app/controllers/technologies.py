@@ -53,20 +53,12 @@ def delete_technologies(id):
     only_technology_existents = []
 
     for data in techs:
-
         if data['id'] == id:
-
-            for item in techs:
-
-                if item['id'] != id:
-
-                    only_technology_existents.append(item)
-
-            save(only_technology_existents)
-            break
-        else:
-            return {"error": f"Não é possível excluir, pois não existe o id {id}"}, 400 
+            index = techs.index(data)
+            techs.pop(index)
+            save(techs)
     
-    return jsonify(only_technology_existents), 200
+            return jsonify({"message": "Item deletado com sucesso!"}), 200
 
+    return jsonify({"error": f"Não existe o id {id}"})
 
