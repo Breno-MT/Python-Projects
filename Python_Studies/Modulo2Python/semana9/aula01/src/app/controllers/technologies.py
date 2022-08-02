@@ -2,6 +2,9 @@ from flask import Blueprint, request, jsonify
 
 from src.app.db import read, save
 from src.app.utils import exists_key, exists_value
+from src.app.models.technology import Technology
+from src.app.db import db, ma
+
 
 technology = Blueprint('technology', __name__, url_prefix='/technology')
 
@@ -13,7 +16,6 @@ def list_all_technologies():
 
     techs = read()
     return jsonify(techs), 200
-
 
 @technology.route("/", methods = ["POST"])
 def add_new_technologies(): 
@@ -61,4 +63,27 @@ def delete_technologies(id):
             return jsonify({"message": "Item deletado com sucesso!"}), 200
 
     return jsonify({"error": f"Não existe o id {id}"})
+
+# @technology.route("/getAllTechinDb", methods = ["GET"])
+# def get_all_techs():
+#     pass
+
+@technology.route("/createNewTech", methods = ["POST"])
+def create_new_tech():
+    list_keys = ['name']
+
+    data = exists_key(request.get_json(), list_keys)  
+
+    if 'error' in data:
+        return jsonify(data), 400
+
+    tech = Technology(
+        name=data['name']
+    )
+
+    db.session.add(tech)
+    db.session.commit()
+
+    return {"message": "Tecnologia salva com sucesso"}, 202
+
 
