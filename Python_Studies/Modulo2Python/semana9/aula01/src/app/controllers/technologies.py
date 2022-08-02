@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify
 
 from src.app.db import read, save
 from src.app.utils import exists_key, exists_value
-from src.app.models.technology import Technology
+from src.app.models.technology import Technology, TechnologySchema, technology_share_schema
 from src.app.db import db, ma
 
 
@@ -64,9 +64,15 @@ def delete_technologies(id):
 
     return jsonify({"error": f"Não existe o id {id}"})
 
-# @technology.route("/getAllTechinDb", methods = ["GET"])
-# def get_all_techs():
-#     pass
+@technology.route("/getAllTechinDb", methods = ["GET"])
+def get_all_techs():
+    
+    tech = Technology.query.all()
+    tech_query = technology_share_schema.dump(tech)
+
+    return jsonify(tech_query)
+
+
 
 @technology.route("/createNewTech", methods = ["POST"])
 def create_new_tech():

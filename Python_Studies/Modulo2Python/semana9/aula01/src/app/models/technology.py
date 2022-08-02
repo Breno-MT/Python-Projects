@@ -13,6 +13,7 @@ class Technology(db.Model):
 class TechnologySchema(ma.Schema):
 
     class Meta:
-        fields = ('id', 'schema')
+        fields = ('id', 'name')
 
-technology_share_schema = TechnologySchema()
+technology_share_schema = TechnologySchema(many=True)
+
