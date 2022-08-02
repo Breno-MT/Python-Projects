@@ -18,7 +18,7 @@ def create_app():
     ma.init_app(app)
     routes(app)
 
-    from src.app.models import technology
+    from src.app.models import technology, developer
 
     Migrate(app=app, db=db, directory="./src/app/migrations")
 

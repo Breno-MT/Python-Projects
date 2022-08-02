@@ -5,8 +5,6 @@ from flask_marshmallow import Marshmallow
 db = SQLAlchemy()
 ma = Marshmallow()
 
-
-
 def read():
     try:
         with open ("src/app/db/technologies.json", "r") as openfile:

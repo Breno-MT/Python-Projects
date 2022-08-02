@@ -1,3 +1,4 @@
+import json
 from flask import Blueprint, request, jsonify
 
 from src.app.db import read, save
@@ -8,14 +9,13 @@ from src.app.db import db, ma
 
 technology = Blueprint('technology', __name__, url_prefix='/technology')
 
-# lista_json = {"data": ["JavaScript", "Python", "C++"]}
-
 
 @technology.route("/", methods = ["GET"])
 def list_all_technologies(): 
 
     techs = read()
     return jsonify(techs), 200
+
 
 @technology.route("/", methods = ["POST"])
 def add_new_technologies(): 
@@ -44,34 +44,35 @@ def add_new_technologies():
     
     return jsonify(techs), 201
 
-@technology.route("/<int:id>", methods = ["DELETE"])
-def delete_technologies(id):
 
-    techs = read()
+# @technology.route("/<int:id>", methods = ["DELETE"])
+# def delete_technologies(id):
 
-    if techs == None or len(techs) == 0:
-        return {"error": f"Não é possível excluir, pois não existem dados"}, 400
+#     techs = read()
 
-    only_technology_existents = []
+#     if techs == None or len(techs) == 0:
+#         return {"error": f"Não é possível excluir, pois não existem dados"}, 400
 
-    for data in techs:
-        if data['id'] == id:
-            index = techs.index(data)
-            techs.pop(index)
-            save(techs)
+#     only_technology_existents = []
+
+#     for data in techs:
+#         if data['id'] == id:
+#             index = techs.index(data)
+#             techs.pop(index)
+#             save(techs)
     
-            return jsonify({"message": "Item deletado com sucesso!"}), 200
+#             return jsonify({"message": "Item deletado com sucesso!"}), 200
 
-    return jsonify({"error": f"Não existe o id {id}"})
+#     return jsonify({"error": f"Não existe o id {id}"})
+
 
 @technology.route("/getAllTechinDb", methods = ["GET"])
 def get_all_techs():
-    
-    tech = Technology.query.all()
-    tech_query = technology_share_schema.dump(tech)
 
-    return jsonify(tech_query)
+    if len(Technology.query.all()) == 0:
+        return jsonify({"message": "Não tem nenhuma tecnologia salva."}), 200
 
+    return jsonify(technology_share_schema.dump(Technology.query.all())), 200
 
 
 @technology.route("/createNewTech", methods = ["POST"])
@@ -92,4 +93,8 @@ def create_new_tech():
 
     return {"message": "Tecnologia salva com sucesso"}, 202
 
+@technology.route("/deleteTech", methods = ["DELETE"])
+def delete_tech():
+    
+    pass
 
