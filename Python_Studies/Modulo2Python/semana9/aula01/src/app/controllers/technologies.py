@@ -93,8 +93,14 @@ def create_new_tech():
 
     return {"message": "Tecnologia salva com sucesso"}, 202
 
-@technology.route("/deleteTech", methods = ["DELETE"])
-def delete_tech():
+@technology.route("/deleteTech/<int:id>", methods = ["DELETE"])
+def delete_tech(id):
+
+    if not (tech := Technology.query.filter_by(id=id).first()):
+        return jsonify({"message": f"O id {id} não foi encontrado ou não existe."})
+
+    db.session.delete(tech)
+    db.session.commit()
     
-    pass
+    return {"message": f"Tecnologia deletada com sucesso."}, 200
 

@@ -1,4 +1,5 @@
 from src.app.db import db, ma 
+from src.app.models.user import User
 
 class Developer(db.Model):
     __tablename__ = "developers"
@@ -6,13 +7,15 @@ class Developer(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     months_experience = db.Column(db.Integer, nullable=False)
     accept_remote_work = db.Column(db.Boolean, nullable=False, default=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
-    def __init__(self, months_experience, accepted_remote_work):
+    def __init__(self, months_experience, accepted_remote_work, user_id):
         self.months_experience = months_experience
         self.accept_remote_work = accepted_remote_work
+        self.user_id = user_id
 
 class DeveloperSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'months_experience', 'accept_remote_work')
+        fields = ('id', 'months_experience', 'accept_remote_work', 'user_id')
 
 developer_share_schema = DeveloperSchema(many=True)
