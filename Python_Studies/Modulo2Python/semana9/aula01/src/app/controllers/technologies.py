@@ -1,5 +1,5 @@
-import json
 from flask import Blueprint, request, jsonify
+import requests
 
 from src.app.db import read, save
 from src.app.utils import exists_key, exists_value

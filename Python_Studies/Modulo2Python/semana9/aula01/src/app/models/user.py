@@ -1,4 +1,3 @@
-import email
 from src.app.db import db, ma
 from src.app.models.city import City
 
@@ -18,6 +17,25 @@ class User(db.Model):
         self.age = age
         self.email = email
         self.password = password
+
+    @classmethod
+    def seed(cls, city_id, name, age, email, password):
+        user = User(
+            city_id = city_id,
+            name = name,
+            age = age,
+            email = email,
+            password = password
+        )
+
+        user.save()
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+
 
 class UserSchema(ma.Schema):
     class Meta:

@@ -1,6 +1,17 @@
+import requests
+
 from flask import json
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+
+# from src.app.models.user import User 
+# from src.app.models.developer import Developer
+# from src.app.models.technology import  Technology
+# from src.app.models.developer_technologies import DeveloperTechnology 
+# from src.app.models.city import City 
+# from src.app.models.country import Country 
+# from src.app.models.state import State 
+
 
 db = SQLAlchemy()
 ma = Marshmallow()

@@ -5,7 +5,7 @@ class Developer(db.Model):
     __tablename__ = "developers"
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    months_experience = db.Column(db.Integer, nullable=False)
+    months_experience = db.Column(db.Integer, nullable=True)
     accept_remote_work = db.Column(db.Boolean, nullable=False, default=True)
     user_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
@@ -13,6 +13,20 @@ class Developer(db.Model):
         self.months_experience = months_experience
         self.accept_remote_work = accepted_remote_work
         self.user_id = user_id
+
+    @classmethod
+    def seed(cls, months_experience, accepted_remote_work, user_id):
+        developer = Developer(
+            months_experience = months_experience, 
+            accepted_remote_work = accepted_remote_work,
+            user_id = user_id
+        )
+
+        developer.save()
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
 
 class DeveloperSchema(ma.Schema):
     class Meta:
