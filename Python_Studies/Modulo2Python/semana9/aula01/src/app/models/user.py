@@ -1,5 +1,8 @@
+import bcrypt
+
 from src.app.db import db, ma
 from src.app.models.city import City
+
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -25,10 +28,15 @@ class User(db.Model):
             name = name,
             age = age,
             email = email,
-            password = password
+            password = cls.encrypt_password(password.encode('utf-8'))
         )
 
         user.save()
+
+    @staticmethod
+    def encrypt_password(password):
+        return bcrypt.haspw(password, bcrypt.gensalt()).decode('utf-8')
+
 
     def save(self):
         db.session.add(self)
