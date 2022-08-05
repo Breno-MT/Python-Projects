@@ -3,7 +3,7 @@ import requests
 
 from src.app.db import read, save
 from src.app.utils import exists_key, exists_value
-from src.app.models.technology import Technology, TechnologySchema, technology_share_schema
+from src.app.models.technology import Technology, TechnologySchema, technologies_share_schema
 from src.app.db import db, ma
 
 
@@ -16,7 +16,7 @@ def get_all_techs():
     if len(Technology.query.all()) == 0:
         return jsonify({"message": "Não tem nenhuma tecnologia salva."}), 200
 
-    return jsonify(technology_share_schema.dump(Technology.query.all())), 200
+    return jsonify(technologies_share_schema.dump(Technology.query.all())), 200
 
 
 @technology.route("/createNewTech", methods = ["POST"])

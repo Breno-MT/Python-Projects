@@ -40,7 +40,7 @@ class Developer(db.Model):
 
 class DeveloperSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'months_experience', 'accept_remote_work', 'user_id')
+        fields = ('id', 'months_experience', 'accepted_remote_work', 'user_id', 'technologies')
 
 developer_share_schema = DeveloperSchema()
 developers_share_schema = DeveloperSchema(many=True)
