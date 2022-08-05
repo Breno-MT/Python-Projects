@@ -29,4 +29,5 @@ class CitySchema(ma.Schema):
     class Meta:
         fields = ('id', 'state_id', 'name')
 
-city_share_schema = CitySchema(many=True)
+city_share_schema = CitySchema()
+cities_share_schema = CitySchema(many=True)

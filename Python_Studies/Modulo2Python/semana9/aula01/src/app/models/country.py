@@ -25,6 +25,8 @@ class Country(db.Model):
         db.session.commit()
 
 class CountrySchema(ma.Schema):
-    fields = ('id', 'name', 'language')
+    class Meta:
+        fields = ('id', 'name', 'language')
 
-country_share_schema = CountrySchema(many=True)
+country_share_schema = CountrySchema()
+countries_share_schema = CountrySchema(many=True)

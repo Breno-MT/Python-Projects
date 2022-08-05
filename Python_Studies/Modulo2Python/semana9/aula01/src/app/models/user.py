@@ -35,7 +35,7 @@ class User(db.Model):
 
     @staticmethod
     def encrypt_password(password):
-        return bcrypt.haspw(password, bcrypt.gensalt()).decode('utf-8')
+        return bcrypt.hashpw(password, bcrypt.gensalt()).decode('utf-8')
 
 
     def save(self):
@@ -49,4 +49,5 @@ class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'city_id', 'name', 'age', 'email', 'password')
 
+user_share_schema = UserSchema()
 users_share_schema = UserSchema(many=True)

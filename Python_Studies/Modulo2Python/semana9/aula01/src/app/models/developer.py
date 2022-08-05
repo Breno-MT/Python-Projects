@@ -42,4 +42,5 @@ class DeveloperSchema(ma.Schema):
     class Meta:
         fields = ('id', 'months_experience', 'accept_remote_work', 'user_id')
 
-developer_share_schema = DeveloperSchema(many=True)
+developer_share_schema = DeveloperSchema()
+developers_share_schema = DeveloperSchema(many=True)
