@@ -43,11 +43,17 @@ class User(db.Model):
         db.session.commit()
 
 
-
-
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'city_id', 'name', 'age', 'email', 'password')
 
 user_share_schema = UserSchema()
 users_share_schema = UserSchema(many=True)
+
+
+class UserDevelopersSchema(ma.Schema):
+    class Meta:
+        fields = ('city_id', 'name', 'age', 'email')
+
+user_developer_share_schema = UserDevelopersSchema()
+user_developers_share_schema = UserDevelopersSchema(many=True)
