@@ -1,5 +1,5 @@
 from src.app.db import db, ma 
-from src.app.models.state import State 
+from src.app.models.state import State, state_share_schema
 
 class City(db.Model):
     __tablename__ = 'cities'
@@ -7,6 +7,7 @@ class City(db.Model):
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     state_id = db.Column(db.Integer, db.ForeignKey(State.id), nullable=False)
     name= db.Column(db.String(84), nullable=False)
+    state = db.relationship("State", foreign_keys=[state_id])
 
     def __init__(self, state_id, name):
         self.state_id = state_id
@@ -26,6 +27,8 @@ class City(db.Model):
         db.session.commit()
 
 class CitySchema(ma.Schema):
+    state = ma.Nested(state_share_schema)
+
     class Meta:
         fields = ('id', 'state_id', 'name')
 
