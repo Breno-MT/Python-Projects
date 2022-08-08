@@ -2,7 +2,7 @@ from src.app.db import db, ma
 
 class Permission(db.Model):
     __tablename__ = "Permission"
-    id = db.Column(db.Integer, antoincrement=True, primary_key=True)
+    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     description = db.Column(db.String(84), nullable=False)
 
     def __init__(self, description):
