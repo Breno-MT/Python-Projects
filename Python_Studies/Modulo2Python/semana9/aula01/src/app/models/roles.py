@@ -2,8 +2,8 @@ from src.app.db import db, ma
 from src.app.models.permission import permissions_share_schema
 
 role_permissions = db.Table('role_permissions',
-                    db.Column('role_id', db.Integer, db.ForeignKey('roles.id')),
-                    db.Column('permission_id', db.Integer, db.ForeignKey('permissions.id')))
+                    db.Column('role_id', db.Integer, db.ForeignKey('Role.id')),
+                    db.Column('permission_id', db.Integer, db.ForeignKey('Permission.id')))
 
 
 class Role(db.Model):
