@@ -21,7 +21,7 @@ def get_all_techs():
 
 
 @technology.route("/create", methods = ["POST"])
-@requires_access_level("CREATE")
+@requires_access_level("WRITE")
 def create_new_tech():
     list_keys = ['name']
 
@@ -31,12 +31,9 @@ def create_new_tech():
         return jsonify(data), 400
 
 
-    tech = Technology(
+    Technology.seed(
         name=data['name']
     )
-
-    db.session.add(tech)
-    db.session.commit()
 
     return {"message": "Tecnologia salva com sucesso"}, 202
 
