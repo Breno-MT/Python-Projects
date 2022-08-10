@@ -2,15 +2,16 @@ from flask import Blueprint, request, jsonify
 import requests
 
 from src.app.db import read, save
-from src.app.utils import exists_key, exists_value
-from src.app.models.technology import Technology, TechnologySchema, technologies_share_schema
 from src.app.db import db, ma
+from src.app.utils import exists_key, exists_value
+from src.app.middlewares.auth import requires_access_level
+from src.app.models.technology import Technology, TechnologySchema, technologies_share_schema
 
 
 technology = Blueprint('technology', __name__, url_prefix='/technology')
 
 
-@technology.route("/getAllTech", methods = ["GET"])
+@technology.route("/", methods = ["GET"])
 def get_all_techs():
 
     if len(Technology.query.all()) == 0:
@@ -19,7 +20,8 @@ def get_all_techs():
     return jsonify(technologies_share_schema.dump(Technology.query.all())), 200
 
 
-@technology.route("/createNewTech", methods = ["POST"])
+@technology.route("/create", methods = ["POST"])
+@requires_access_level("CREATE")
 def create_new_tech():
     list_keys = ['name']
 
@@ -38,8 +40,8 @@ def create_new_tech():
 
     return {"message": "Tecnologia salva com sucesso"}, 202
 
-
-@technology.route("/deleteTech/<int:id>", methods = ["DELETE"])
+@technology.route("/delete/<int:id>", methods = ["DELETE"])
+@requires_access_level("DELETE")
 def delete_tech(id):
 
     if not (tech := Technology.query.filter_by(id=id).first()):
@@ -51,7 +53,8 @@ def delete_tech(id):
     return {"message": f"Tecnologia deletada com sucesso."}, 200
 
 
-@technology.route("/updateTech/<int:id>", methods = ["PUT"])
+@technology.route("/update/<int:id>", methods = ["PUT"])
+@requires_access_level("UPDATE")
 def update_tech(id):
 
     if not (tech_query := Technology.query.filter_by(id=id).first()):

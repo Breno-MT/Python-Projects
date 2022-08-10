@@ -1,15 +1,13 @@
-from datetime import datetime, timedelta
-from jwt import encode
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify
 
-from src.app.models.user import User, user_share_schema
-from src.app.db import read, save
 from src.app.utils import exists_key, exists_value
-from src.app.services.user_services import create_user
+from src.app.services.user_services import create_user, login_user
+from src.app.middlewares.auth import requires_access_level
 
 user = Blueprint('user', __name__, url_prefix='/users')
 
 @user.route('/create', methods = ['POST'])
+@requires_access_level("CREATE")
 def create_users():
     list_keys = ['city_id', 'name', 'age', 'email', 'password']
 
@@ -35,23 +33,11 @@ def login():
 
     data = exists_key(request.get_json(), list_keys)
 
-    user_query = User.query.filter_by(email = data['email']).first_or_404()
+    response = login_user(data['email'], data ['password'])
 
-    user_dict = user_share_schema.dump(user_query)
-
-    if not user_query.check_password(data['password']):
-        return jsonify({
-            "error": "Suas credênciais estão incorretas!"
-        }), 403
+    if "error" in response:
+        return jsonify(response['error']), response['status_code']
     
-    payload = {
-        "user_id": user_query.id,
-        "exp": datetime.utcnow() + timedelta(days=1),
-        "roles": user_dict['roles']
-    }
-
-    token = encode(payload, current_app.config["SECRET_KEY"], "HS256")
-
-    return jsonify({"token": token})
+    return jsonify(response), 200
 
 
