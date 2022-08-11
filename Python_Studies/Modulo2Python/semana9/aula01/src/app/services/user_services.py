@@ -5,9 +5,19 @@ from flask import jsonify, current_app
 
 from src.app.models.user import User, user_share_schema
 from src.app.models.roles import Role
+from src.app.utils import generate_jwt
 
-def create_user(city_id, name, age, email, password, roles = "HELPER"):
+def create_user(city_id, name, age, email, password, roles):
     try:
+
+        if roles == None:
+            roles = "HELPER"
+
+        exist_user = get_user_email(email)
+
+        if exist_user:
+            return exist_user
+
         roles_query = Role.query.filter_by(description = roles).all()
     
         User.seed(
@@ -41,9 +51,20 @@ def login_user(email, password):
             "roles": user_dict['roles']
         }
 
-        token = encode(payload, current_app.config["SECRET_KEY"], "HS256")
+        # token = generate_jwt(payload)
 
-        return {"token": token}
+        return {"token": generate_jwt(payload)}
     
     except:
         return {"error": "Algo deu errado!", "status_code": 500}
+
+def get_user_email(email):
+    try:
+        user_query = User.query.filter_by(email = email).first_or_404()
+        user_dict = user_share_schema.dump(user_query)
+
+        return {"id": user_dict['id'], "roles": user_dict['roles']}
+
+    except:
+
+        return {"error": "Algo deu errado!", "status_code": 500} 

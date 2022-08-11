@@ -1,7 +1,8 @@
 import requests
 
+from jwt import encode, decode
+from flask import current_app
 from sqlalchemy.sql.expression import func
-
 
 from src.app.models.city import City, cities_share_schema
 from src.app.models.developer import Developer
@@ -158,4 +159,7 @@ def populate_db():
     print("Dados inseridos com sucesso.")
     return
 
+def generate_jwt(payload):
+    token = encode(payload, current_app.config["SECRET_KEY"], "HS256")
 
+    return token
