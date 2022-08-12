@@ -12,6 +12,7 @@ from werkzeug.utils import redirect
 from src.app.utils import exists_key, exists_value, generate_jwt
 from src.app.services.user_services import create_user, login_user, get_user_email
 from src.app.middlewares.auth import requires_access_level
+from src.app.models.user import User, user_developers_share_schema, user_developer_share_schema
 
 user = Blueprint('user', __name__, url_prefix='/user')
 
@@ -26,6 +27,25 @@ flow = Flow.from_client_secrets_file(
 )
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+@user.route("/", methods = ['GET'])
+def list_users():
+
+    list_users = User.query.all()
+
+    list_users_dict = user_developers_share_schema.dump(list_users)
+  
+    return jsonify(list_users_dict), 200
+
+@user.route("/<int:id>", methods = ['GET'])
+def list_user_by_id(id):
+
+    list_users = User.query.filter_by(id=id).first()
+
+    list_users_dict = user_developer_share_schema.dump(list_users)
+  
+    return jsonify(list_users_dict), 200
+
 
 @user.route('/create', methods = ['POST'])
 # @requires_access_level("WRITE")
