@@ -46,9 +46,8 @@ def list_user_by_id(id):
   
     return jsonify(list_users_dict), 200
 
-
 @user.route('/create', methods = ['POST'])
-# @requires_access_level("WRITE")
+@requires_access_level("WRITE")
 def create_users():
     
     list_keys = ['city_id', 'name', 'age', 'email', 'password']
@@ -56,10 +55,10 @@ def create_users():
     data = exists_key(request.get_json(), list_keys)
 
     if "@" not in data['email']:
-        return jsonify({"error": "Email inválido!", "status_code": 500})
+        return jsonify({"error": "Email inválido!"}), 422
 
     if len(data['password']) <= 8:
-        return jsonify({"error": "Senha deve ser maior que 8 caracteres!", "status_code": 500})
+        return jsonify({"error": "Senha deve ser maior que 8 caracteres!"}), 401
 
     response = create_user(
         data["city_id"],

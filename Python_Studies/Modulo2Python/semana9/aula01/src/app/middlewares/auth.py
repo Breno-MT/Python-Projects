@@ -25,7 +25,7 @@ def requires_access_level(permission):
                 return jsonify({"error": "Você não possui permissão."}), 401
             
             try:
-                token_pure = token_pure.replace("Bearer ", "")
+                token_pure = token.replace("Bearer ", "")
                 decoded = decode(token_pure, current_app.config['SECRET_KEY'], "HS256")
                 current_user = User.query.get(decoded['user_id'])
 

@@ -13,12 +13,6 @@ def create_user(city_id, name, age, email, password, roles):
         if roles == None:
             roles = "HELPER"
 
-        exist_user = get_user_email(email)
-
-        if exist_user:
-            return exist_user
-
-
         roles_query = Role.query.filter_by(description = roles).all()
     
         User.seed(
@@ -30,10 +24,15 @@ def create_user(city_id, name, age, email, password, roles):
             roles_query
         )
 
+        exist_user = get_user_email(email)
+
+        if exist_user:
+            return exist_user
+        
+
         return {"message": "Usuário foi criado com sucesso"}
 
     except:
-
         return {"error": "Algo deu errado."}
 
 def login_user(email, password):
@@ -68,4 +67,4 @@ def get_user_email(email):
         return {"id": user_dict['id'], "roles": user_dict['roles']}
 
     except:
-        return
+        return {"error": "Algo deu errado!", "status_code": 500}
