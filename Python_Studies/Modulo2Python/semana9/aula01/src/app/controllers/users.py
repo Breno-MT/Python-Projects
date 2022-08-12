@@ -35,6 +35,12 @@ def create_users():
 
     data = exists_key(request.get_json(), list_keys)
 
+    if "@" not in data['email']:
+        return jsonify({"error": "Email inválido!", "status_code": 500})
+
+    if len(data['password']) <= 8:
+        return jsonify({"error": "Senha deve ser maior que 8 caracteres!", "status_code": 500})
+
     response = create_user(
         data["city_id"],
         data["name"],

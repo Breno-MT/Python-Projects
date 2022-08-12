@@ -18,6 +18,7 @@ def create_user(city_id, name, age, email, password, roles):
         if exist_user:
             return exist_user
 
+
         roles_query = Role.query.filter_by(description = roles).all()
     
         User.seed(
@@ -32,6 +33,7 @@ def create_user(city_id, name, age, email, password, roles):
         return {"message": "Usuário foi criado com sucesso"}
 
     except:
+
         return {"error": "Algo deu errado."}
 
 def login_user(email, password):
@@ -51,9 +53,9 @@ def login_user(email, password):
             "roles": user_dict['roles']
         }
 
-        # token = generate_jwt(payload)
+        token = generate_jwt(payload)
 
-        return {"token": generate_jwt(payload)}
+        return {"token": token}
     
     except:
         return {"error": "Algo deu errado!", "status_code": 500}
@@ -66,5 +68,4 @@ def get_user_email(email):
         return {"id": user_dict['id'], "roles": user_dict['roles']}
 
     except:
-
-        return {"error": "Algo deu errado!", "status_code": 500} 
+        return
