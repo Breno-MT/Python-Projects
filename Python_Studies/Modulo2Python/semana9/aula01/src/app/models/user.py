@@ -6,7 +6,7 @@ from src.app.models.roles import roles_share_schema
 
 users_roles = db.Table('users_role',
                     db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
-                    db.Column('role_id', db.Integer, db.ForeignKey('Role.id'))
+                    db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
                     )
 
 

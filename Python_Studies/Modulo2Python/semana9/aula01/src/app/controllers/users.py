@@ -28,7 +28,7 @@ flow = Flow.from_client_secrets_file(
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 @user.route('/create', methods = ['POST'])
-@requires_access_level("WRITE")
+# @requires_access_level("WRITE")
 def create_users():
     
     list_keys = ['city_id', 'name', 'age', 'email', 'password']

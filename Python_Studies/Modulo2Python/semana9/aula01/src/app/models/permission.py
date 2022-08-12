@@ -1,7 +1,7 @@
 from src.app.db import db, ma
 
 class Permission(db.Model):
-    __tablename__ = "Permission"
+    __tablename__ = "permission"
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     description = db.Column(db.String(84), nullable=False)
 

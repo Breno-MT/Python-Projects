@@ -2,15 +2,15 @@ from src.app.db import db, ma
 from src.app.models.permission import permissions_share_schema
 
 role_permissions = db.Table('role_permissions',
-                    db.Column('role_id', db.Integer, db.ForeignKey('Role.id')),
-                    db.Column('permission_id', db.Integer, db.ForeignKey('Permission.id')))
+                    db.Column('role_id', db.Integer, db.ForeignKey('role.id')),
+                    db.Column('permission_id', db.Integer, db.ForeignKey('permission.id')))
 
 
 class Role(db.Model):
-    __tablename__ = "Role"
+    __tablename__ = "role"
     id = db.Column(db.Integer, autoincrement = True, primary_key = True)
     description = db.Column(db.String(84), nullable = False)
-    permissions = db.relationship('Permission', secondary=role_permissions, backref='roles')
+    permissions = db.relationship('Permission', secondary=role_permissions, backref='role')
 
     def __init__(self, description, permissions):
         self.description = description
