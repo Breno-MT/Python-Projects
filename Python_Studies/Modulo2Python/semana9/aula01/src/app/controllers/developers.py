@@ -1,4 +1,5 @@
 from flask import Blueprint, jsonify
+from ..models.developer import Developer, developer_share_schema
 
 from src.app.services.developer_services import list_all_developers_services
 from src.app.middlewares.auth import requires_access_level
@@ -12,7 +13,17 @@ def list_all_developers():
 
     return jsonify(list_devs)
 
-@developers.route("/create", methods = ["POST"])
-@requires_access_level("WRITE")
-def create_developer():
-    pass
+@developers.route("/<int:id>", methods = ["GET"])
+# @requires_access_level("WRITE")
+def list_by_id(id):
+
+    
+
+    list_dev = Developer.query.filter_by(user_id=id).first()
+
+    list_dev_dict = developer_share_schema.dump(list_dev)
+
+    if list_dev_dict == {}:
+        return jsonify({"error": "Dev não encontrado!"}), 404
+
+    return jsonify(list_dev_dict), 200

@@ -3,6 +3,7 @@ import requests
 
 from flask import Blueprint, request, jsonify
 from flask.globals import session
+from sqlalchemy.sql.expression import func
 
 from google import auth
 from google.oauth2 import id_token
@@ -12,7 +13,9 @@ from werkzeug.utils import redirect
 from src.app.utils import exists_key, exists_value, generate_jwt
 from src.app.services.user_services import create_user, login_user, get_user_email
 from src.app.middlewares.auth import requires_access_level
-from src.app.models.user import User, user_developers_share_schema, user_developer_share_schema
+from src.app.models.user import User, user_developers_share_schema, user_developer_share_schema, users_share_schema
+from src.app.models.developer import Developer
+from src.app.models.technology import Technology
 
 user = Blueprint('user', __name__, url_prefix='/user')
 
@@ -47,7 +50,7 @@ def list_user_by_id(id):
     return jsonify(list_users_dict), 200
 
 @user.route('/create', methods = ['POST'])
-@requires_access_level("WRITE")
+# @requires_access_level("WRITE")
 def create_users():
     
     list_keys = ['city_id', 'name', 'age', 'email', 'password']
@@ -68,6 +71,21 @@ def create_users():
         data["password"], 
         data["roles"]
     )
+
+    users = User.query.filter_by(name=data['name'])
+    users_dict = users_share_schema.dump(users)
+
+    for index, user_object in enumerate(users_dict):
+        if index % 2 == 0: # if para verificar se o index é par
+            techs = Technology.query.order_by(func.random()).limit(10).all() # query que retorna aleatóriamente 10 tecnologias
+            Developer.seed(
+                None,
+                index % 2 == 0,
+                user_object['id'],
+                techs
+            )
+
+
 
     if "error" in response:
         return jsonify(response), 400
