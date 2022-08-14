@@ -1,5 +1,4 @@
 from src.app.db import db, ma
-from src.app.models.developer import developers_share_schema, developer_technologies
 from src.app.models.user import user_developer_share_schema
 
 
@@ -8,7 +7,7 @@ class Technology(db.Model):
 
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(84), nullable=False)
-    devs = db.relationship('Technology', secondary=developer_technologies, backref='technologies')
+    
 
 
     def __init__(self, name):
@@ -27,19 +26,23 @@ class Technology(db.Model):
         db.session.commit()
 
 
-class TechnologySchema(ma.Schema):
+class DeveloperSchema(ma.Schema):
+
+    user = ma.Nested(user_developer_share_schema)
 
     class Meta:
-        fields = ('id', 'name')
+        fields = ('id', 'months_experience', 'accepted_remote_work', 'user_id', 'user')
+
+developer_share_schema = DeveloperSchema()
+developers_share_schema = DeveloperSchema(many=True)
+
+
+class TechnologySchema(ma.Schema):
+    developers = ma.Nested(developers_share_schema)
+
+    class Meta:
+        fields = ('id', 'name', 'developers')
 
 technology_share_schema = TechnologySchema()
 technologies_share_schema = TechnologySchema(many=True)
 
-class DevelopersSchema(ma.Schema):
-    devs = ma.Nested(developers_share_schema)
-    user = ma.Nested(user_developer_share_schema)
-
-    class Meta:
-        fields = ('id', 'name', 'devs')
-
-devs_techs_share_schema = DevelopersSchema(many=True)

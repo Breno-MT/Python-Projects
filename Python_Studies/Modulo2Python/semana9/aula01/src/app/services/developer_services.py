@@ -1,6 +1,6 @@
 from sqlalchemy.orm import load_only
 
-from app.models.developer_models import Developer, developers_share_schema
+from src.app.models.developer import Developer, developers_share_schema
 from src.app.models.technology import technologies_share_schema
 from src.app.models.user import User, UserSchema
 

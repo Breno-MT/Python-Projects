@@ -87,8 +87,6 @@ def create_users():
                 techs
             )
 
-
-
     if "error" in response:
         return jsonify(response), 400
 
