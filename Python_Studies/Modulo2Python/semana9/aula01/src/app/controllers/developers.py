@@ -31,7 +31,7 @@ def list_by_id(id):
     return jsonify(list_dev_dict), 200
 
 @developers.route("/techs/<int:id_tech>", methods = ["GET"])
-@requires_access_level("READ")
+# @requires_access_level("READ")
 def list_by_tech_id(id_tech):
     
     tech_field_filter = TechnologySchema(only=(['id', 'name', 'developers']))
@@ -39,6 +39,9 @@ def list_by_tech_id(id_tech):
     list_tech = Technology.query.filter_by(id=id_tech).first() # pega tech por id
 
     list_tech_id_dict = tech_field_filter.dump(list_tech)
+
+    if list_tech_id_dict == {}:
+        return jsonify({"error": "Tecnologia não encontrada."}), 404
 
     return jsonify(list_tech_id_dict), 200
     
