@@ -27,7 +27,6 @@ class Technology(db.Model):
 
 
 class DeveloperSchema(ma.Schema):
-
     user = ma.Nested(user_developer_share_schema)
 
     class Meta:
@@ -35,7 +34,6 @@ class DeveloperSchema(ma.Schema):
 
 developer_share_schema = DeveloperSchema()
 developers_share_schema = DeveloperSchema(many=True)
-
 
 class TechnologySchema(ma.Schema):
     developers = ma.Nested(developers_share_schema)
@@ -45,4 +43,3 @@ class TechnologySchema(ma.Schema):
 
 technology_share_schema = TechnologySchema()
 technologies_share_schema = TechnologySchema(many=True)
-

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify
 from src.app.models.developer import Developer, developer_share_schema, developers_share_schema
-from src.app.models.technology import Technology, technologies_share_schema, technology_share_schema
+from src.app.models.technology import Technology, TechnologySchema, technologies_share_schema, technology_share_schema
 from src.app.models.user import User
 
 from src.app.services.developer_services import list_all_developers_services
@@ -18,7 +18,7 @@ def list_all_developers():
     return jsonify(list_devs)
 
 @developers.route("/<int:id>", methods = ["GET"])
-# @requires_access_level("READ")
+@requires_access_level("READ")
 def list_by_id(id):
 
     list_dev = Developer.query.filter_by(user_id=id).first()
@@ -31,12 +31,14 @@ def list_by_id(id):
     return jsonify(list_dev_dict), 200
 
 @developers.route("/techs/<int:id_tech>", methods = ["GET"])
-# @requires_access_level("READ")
+@requires_access_level("READ")
 def list_by_tech_id(id_tech):
     
+    tech_field_filter = TechnologySchema(only=(['id', 'name', 'developers']))
+
     list_tech = Technology.query.filter_by(id=id_tech).first() # pega tech por id
 
-    list_tech_id_dict = technology_share_schema.dump(list_tech)
+    list_tech_id_dict = tech_field_filter.dump(list_tech)
 
     return jsonify(list_tech_id_dict), 200
     

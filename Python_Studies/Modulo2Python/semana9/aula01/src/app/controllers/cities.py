@@ -8,7 +8,7 @@ from src.app.models.city import City, city_share_schema, cities_share_schema
 cities = Blueprint('cities', __name__, url_prefix='/cities')
 
 @cities.route("/", methods = ["GET"])
-# @requires_access_level("READ")
+@requires_access_level("READ")
 def list_all():
 
     cities = City.query.all()
@@ -21,7 +21,7 @@ def list_all():
 
 
 @cities.route("/<int:id>", methods = ["GET"])
-# @requires_access_level("READ")
+@requires_access_level("READ")
 def list_city_id(id):
 
     cities = City.query.filter_by(id=id).first()
