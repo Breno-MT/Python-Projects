@@ -32,6 +32,7 @@ flow = Flow.from_client_secrets_file(
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 @user.route("/", methods = ['GET'])
+@requires_access_level("READ")
 def list_users():
 
     list_users = User.query.all()
@@ -41,6 +42,7 @@ def list_users():
     return jsonify(list_users_dict), 200
 
 @user.route("/<int:id>", methods = ['GET'])
+@requires_access_level("READ")
 def list_user_by_id(id):
 
     list_users = User.query.filter_by(id=id).first()
@@ -50,7 +52,7 @@ def list_user_by_id(id):
     return jsonify(list_users_dict), 200
 
 @user.route('/create', methods = ['POST'])
-# @requires_access_level("WRITE")
+@requires_access_level("WRITE")
 def create_users():
     
     list_keys = ['city_id', 'name', 'age', 'email', 'password']

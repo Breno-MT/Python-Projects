@@ -4,6 +4,7 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_cors import CORS
 
+
 from src.app.config import app_config
 from src.app.routes import routes
 from src.app.db import db, ma

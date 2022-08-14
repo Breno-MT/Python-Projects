@@ -5,19 +5,34 @@ from src.app.db import read, save
 from src.app.db import db, ma
 from src.app.utils import exists_key, exists_value
 from src.app.middlewares.auth import requires_access_level
-from src.app.models.technology import Technology, TechnologySchema, technologies_share_schema
+from src.app.models.technology import Technology, TechnologySchema, technologies_share_schema, technology_share_schema
 
 
 technology = Blueprint('technology', __name__, url_prefix='/technology')
 
 
 @technology.route("/", methods = ["GET"])
+@requires_access_level("READ")
 def get_all_techs():
 
     if len(Technology.query.all()) == 0:
         return jsonify({"message": "Não tem nenhuma tecnologia salva."}), 200
 
     return jsonify(technologies_share_schema.dump(Technology.query.all())), 200
+
+@technology.route("/<int:id>", methods = ["GET"])
+# @requires_access_level("READ")
+def get_by_id(id):
+
+    list_tech = Technology.query.filter_by(id=id).first()
+
+    list_tech_dict = technology_share_schema.dump(list_tech)
+
+    if list_tech_dict == {}:
+        return jsonify({"error": "Tecnologia não encontrada."}), 404
+
+    return jsonify(list_tech_dict), 200
+
 
 
 @technology.route("/create", methods = ["POST"])
